@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -54,7 +55,7 @@ fun ScreenWithImageAndDimming() {
         )
     }
 }
-
+@Preview
 @Composable
 fun ScreenWithImageAndDimmingPreview() {
     Surface(
