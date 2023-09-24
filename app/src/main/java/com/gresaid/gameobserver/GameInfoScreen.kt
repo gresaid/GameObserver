@@ -71,14 +71,13 @@ fun GameLogo(
         val sizeGameIcon = 54.dp
         Box(
             modifier = Modifier
-                .size(sizeGameIcon + 17.dp * 2, sizeGameIcon + 17.dp * 2)
+                .size(sizeGameIcon + 17.dp * 2)
                 .background(Color.Black, shape = RoundedCornerShape(13.dp))
                 .border(2.dp, Color.Gray, RoundedCornerShape(13.dp))
-                .align(Alignment.Center)
         ) {
             Image(
                 painter = painterResource(id = gameLogo),
-                contentDescription = null,
+                contentDescription = "Game Logo",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .size(sizeGameIcon)
