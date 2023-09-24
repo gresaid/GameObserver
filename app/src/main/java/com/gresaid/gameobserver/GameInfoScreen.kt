@@ -47,9 +47,15 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun GameInfoScreen() {
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(Color(android.graphics.Color.parseColor("#050B18")))
+    ) {
         HeaderBackground(picture = R.drawable.dota_background)
         GameSection()
+        Spacer(modifier = Modifier.height(height = 20.dp))
+        ReviewAndRating()
     }
 
 }
@@ -149,7 +155,8 @@ fun GameInfo(
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
-            letterSpacing = 0.5.sp
+            letterSpacing = 0.5.sp,
+            color = Color.White
         )
         Spacer(modifier = Modifier.height(7.dp))
         Row(
@@ -164,7 +171,8 @@ fun GameInfo(
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
-                letterSpacing = 0.5.sp
+                letterSpacing = 0.5.sp,
+                color = Color.White
             )
         }
 
@@ -241,25 +249,6 @@ fun CategoryButton(
 
 }
 
-@Composable
-fun BackgroundRoundedShape(
-    hexColor: String,
-    modifier: Modifier = Modifier
-) {
-    val color = Color(android.graphics.Color.parseColor(hexColor))
-    Box(
-        modifier = modifier
-            .background(
-                color = color,
-                shape = RoundedCornerShape(
-                    topStart = 21.dp,
-                    topEnd = 21.dp,
-                    bottomStart = 0.dp,
-                    bottomEnd = 0.dp
-                )
-            )
-    )
-}
 
 @Composable
 fun GameDescription(
@@ -272,9 +261,9 @@ fun GameDescription(
                 lineHeight = 19.sp,
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
-//            color = Color(238, 242, 251, 70),
-                color = Color.Black,
-            )
+                color = Color(238, 242, 251, 70),
+
+                )
         }
     }
 }
@@ -304,28 +293,34 @@ fun PostSection(
         horizontalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         items(posts.size) {
-            Box(modifier = Modifier
-                .size(width = 240.dp, height = 135.dp),
-                contentAlignment = Alignment.Center
-            ){
-            Image(
-                painter = posts[it],
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
+            Box(
                 modifier = Modifier
-                    .clip(
-                        RoundedCornerShape(14.dp)
-                    )
-            )
-                Box(modifier = Modifier.size(48.dp)
-                    .background(color = Color(255, 255, 255, 100),RoundedCornerShape(100.dp))
-                    .blur(radiusX = 10.dp,
-                        radiusY = 10.dp,
-                        edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
-                    ))
+                    .size(width = 240.dp, height = 135.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = posts[it],
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .clip(
+                            RoundedCornerShape(14.dp)
+                        )
+                )
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .background(color = Color(255, 255, 255, 100), RoundedCornerShape(100.dp))
+                        .blur(
+                            radiusX = 10.dp,
+                            radiusY = 10.dp,
+                            edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+                        )
+                )
 
 
-                Icon( imageVector = Icons.Default.PlayArrow,
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
                     contentDescription = "Play",
                     tint = Color.White
                 )
@@ -335,3 +330,43 @@ fun PostSection(
     }
 }
 
+@Composable
+fun ReviewAndRating(modifier: Modifier = Modifier) {
+    Box(modifier.padding(horizontal = 20.dp)) {
+        Text(
+            text = "Review & Ratings",
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            color = Color(android.graphics.Color.parseColor("#EEF2FB"))
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        AvarageRatingGame(ratingGame = 4.9f, ratingsCount = 70)
+    }
+
+
+}
+
+
+@Composable
+fun AvarageRatingGame(
+    ratingGame: Float? = null,
+    ratingsCount: Int? = null,
+    modifier: Modifier = Modifier) {
+
+        Text(
+            text = ratingGame.toString(),
+            fontWeight = FontWeight.Bold,
+            fontSize = 48.sp,
+            color = Color(android.graphics.Color.parseColor("#EEF2FB"))
+        )
+        Column(
+            modifier = modifier,
+        ) {
+            RatingStars(starCount = 5)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = ratingsCount.toString() + "M",
+                fontWeight = FontWeight.Bold,
+                fontSize = 12.sp,
+                color = Color(android.graphics.Color.parseColor("#EEF2FB")))
+        }
+}
