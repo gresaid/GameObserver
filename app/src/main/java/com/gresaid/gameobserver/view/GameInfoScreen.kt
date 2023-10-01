@@ -1,6 +1,6 @@
-package com.gresaid.gameobserver
+package com.gresaid.gameobserver.view
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,11 +17,13 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Star
@@ -39,29 +41,42 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.gresaid.gameobserver.R
+import com.gresaid.gameobserver.model.ReviewData
 
 @Composable
 fun GameInfoScreen() {
-    Column(
-        Modifier
+    LazyColumn(
+        modifier = Modifier
             .fillMaxSize()
-            .background(Color(android.graphics.Color.parseColor("#050B18")))
-            .verticalScroll(rememberScrollState())
+            .background(
+                Color(android.graphics.Color.parseColor("#050B18"))
+            )
     ) {
-        HeaderBackground(picture = R.drawable.dota_background)
-        GameSection()
-        Spacer(modifier = Modifier.height(height = 20.dp))
-        ReviewAndRating()
+        item {
+            HeaderBackground(picture = R.drawable.dota_background)
+        }
+        item {
+            GameSection()
+        }
+        item {
+            Spacer(modifier = Modifier.height(height = 20.dp))
+        }
+        item {
+            ReviewAndRating()
+        }
     }
-
 }
+
 
 @Composable
 fun HeaderBackground(
@@ -271,7 +286,6 @@ fun GameDescription(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GameMultimediaContent() {
     PostSection(
@@ -284,7 +298,6 @@ fun GameMultimediaContent() {
     )
 }
 
-@ExperimentalFoundationApi
 @Composable
 fun PostSection(
     posts: List<Painter>,
@@ -335,6 +348,7 @@ fun PostSection(
 
 @Composable
 fun ReviewAndRating(modifier: Modifier = Modifier) {
+
     Box(modifier.padding(horizontal = 20.dp)) {
         Column {
             Text(
@@ -344,18 +358,20 @@ fun ReviewAndRating(modifier: Modifier = Modifier) {
                 color = Color(android.graphics.Color.parseColor("#EEF2FB"))
             )
             Spacer(modifier = Modifier.height(12.dp))
-            AvarageRatingGame(ratingGame = 4.9f, ratingsCount = 70)
+            AverageRatingGame(ratingGame = 4.9f, ratingsCount = 70)
+            Spacer(modifier = Modifier.height(32.dp))
+            UserReview()
         }
-    }
 
+    }
 }
 
 
 @Composable
-fun AvarageRatingGame(
+fun AverageRatingGame(
+    modifier: Modifier = Modifier,
     ratingGame: Float? = null,
-    ratingsCount: Int? = null,
-    modifier: Modifier = Modifier
+    ratingsCount: Int? = null
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -390,4 +406,77 @@ fun AvarageRatingGame(
             )
         }
     }
+}
+
+@Composable
+fun UserReview() {
+    val context = LocalContext.current
+    val dataFileString = getJsonDataFromAsset(context, "ReviewJson.json")
+    val gson = Gson()
+    val gridSampleType = object : TypeToken<List<ReviewData>>() {}.type
+    val reviewData: List<ReviewData> = gson.fromJson(dataFileString, gridSampleType)
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(1),
+        modifier = Modifier
+            .height(250.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+
+    ) {
+        items(reviewData) { data ->
+            ReviewDataGridItem(data)
+        }
+    }
+}
+
+@Composable
+fun ReviewDataGridItem(data: ReviewData) {
+    Column(
+        modifier = Modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Image(
+                painter = painterResource(
+                    id = when (data.id) {
+                        1L -> R.drawable.indus
+                        2L -> R.drawable.not_indus
+                        else -> R.drawable.blank_avatar
+                    }
+                ), contentDescription = "UserPic",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(CircleShape)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text(
+                    text = data.userName, color = Color.White,
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.height(7.dp))
+                Text(text = data.Date, color = Color.White, fontSize = 12.sp) // Change in feature
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = data.userComment, fontSize = 12.sp, color = Color.White,
+            lineHeight = 20.sp, maxLines = 5
+        )
+    }
+
+}
+
+fun getJsonDataFromAsset(context: Context, data: String): String {
+    return context.assets.open(data).bufferedReader().use { it.readText() }
+
 }
