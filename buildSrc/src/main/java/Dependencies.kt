@@ -2,7 +2,7 @@ object Dependencies {
     object Compose {
         val ui by lazy { "androidx.compose.ui:${Versions.ui}" }
         val uiGraphics by lazy { "androidx.compose.ui:${Versions.uiGraphics}" }
-        val material by lazy { "androidx.compose.material3:${Versions.material}" }
+        val material by lazy { "androidx.compose.material:material:${Versions.material}" }
         val composeBOM by lazy { "androidx.compose:compose-bom:${Versions.composeBOM}" }
 
 
@@ -21,7 +21,9 @@ object Dependencies {
     }
 
     object Navigation {
-        val nabigationRuntimeKtx by lazy { "androidx.navigation:navigation-runtime-ktx:${Versions.nabigationRuntimeKtx}" }
+        val nabigationRuntimeKtx by lazy {
+            "androidx.navigation:navigation-runtime-ktx:${Versions.nabigationRuntimeKtx}"
+        }
     }
 
     object Lifecycle {

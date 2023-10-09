@@ -1,28 +1,27 @@
 package com.gresaid.gameobserver.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 
-private val darkColorPalette = darkColorScheme(
+private val darkColorPalette = darkColors(
     primary = extraWhite,
     background = darkBLue,
     onSecondary = gray,
     secondary = blue,
-    onPrimaryContainer = yellow,
+    secondaryVariant = yellow,
 
-)
+    )
 
-private val lightColorPalette = lightColorScheme(
+private val lightColorPalette = lightColors(
     primary = extraWhite,
     background = darkBLue,
     onSecondary = gray,
     secondary = blue,
-    onPrimaryContainer = yellow,
+    secondaryVariant = yellow,
 )
 
 @Composable
@@ -30,14 +29,14 @@ fun GresTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    if (darkTheme) {
+    val colors = if (darkTheme) {
         darkColorPalette
     } else {
         lightColorPalette
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colors = colors,
         typography = Typography,
         content = content
     )

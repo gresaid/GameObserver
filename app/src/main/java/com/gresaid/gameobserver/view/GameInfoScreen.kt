@@ -23,12 +23,12 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -177,8 +177,8 @@ fun GameInfo(
         Text(
             text = gameName,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.h2,
+            color = MaterialTheme.colors.primary,
         )
         Spacer(modifier = Modifier.height(7.dp))
         Row(
@@ -191,8 +191,8 @@ fun GameInfo(
             Text(
                 text = "${ratingsCount}M",
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSecondary
+                style = MaterialTheme.typography.body2,
+                color = MaterialTheme.colors.onSecondary
             )
         }
 
@@ -259,8 +259,8 @@ fun CategoryButton(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.secondary
+            style = MaterialTheme.typography.body1,
+            color = MaterialTheme.colors.secondary
         )
     }
 
@@ -275,8 +275,8 @@ fun GameDescription(
         if (text != null) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSecondary,
+                style = MaterialTheme.typography.body2,
+                color = MaterialTheme.colors.onSecondary,
             )
         }
     }
@@ -349,8 +349,8 @@ fun ReviewAndRating(modifier: Modifier = Modifier) {
         Column {
             Text(
                 text = stringResource(R.string.review_ratings),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.h3,
+                color = MaterialTheme.colors.primary,
             )
             Spacer(modifier = Modifier.height(12.dp))
             AverageRatingGame(ratingGame = 4.9f, ratingsCount = 70)
@@ -375,8 +375,8 @@ fun AverageRatingGame(
     ) {
         Text(
             text = ratingGame.toString(),
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.primary
+            style = MaterialTheme.typography.h1,
+            color = MaterialTheme.colors.primary
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(
@@ -394,8 +394,8 @@ fun AverageRatingGame(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = ratingsCount.toString() + "M",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSecondary,
+                style = MaterialTheme.typography.body2,
+                color = MaterialTheme.colors.onSecondary,
             )
         }
     }
@@ -455,22 +455,22 @@ fun ReviewDataGridItem(data: ReviewData) {
             ) {
                 Text(
                     text = data.userName,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
+                    style = MaterialTheme.typography.h3,
+                    color = MaterialTheme.colors.primary
                 )
                 Spacer(modifier = Modifier.height(7.dp))
                 Text(
                     text = data.Date,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.primary
                 ) // Change in feature
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = data.userComment,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSecondary,
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.onSecondary,
             maxLines = 5,
         )
     }
@@ -488,7 +488,7 @@ fun RoundedButtonInstall(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = MaterialTheme.colors.secondaryVariant,
                 shape = RoundedCornerShape(12.dp)
             )
             .fillMaxWidth(),
@@ -497,8 +497,8 @@ fun RoundedButtonInstall(
             Text(
                 modifier = Modifier.padding(vertical = 20.dp),
                 text = buttonName,
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.h2,
+                color = MaterialTheme.colors.background,
 
                 )
         }
