@@ -1,4 +1,4 @@
-package com.gresaid.gameobserver.model
+package com.gresaid.gameobserver.presentation.model
 
 data class ReviewData(
     val id: Long,

@@ -1,8 +1,7 @@
-package com.gresaid.gameobserver.view
+package com.gresaid.gameobserver.presentation.screens.gameInfoScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,28 +17,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -49,8 +37,14 @@ import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.gresaid.gameobserver.R
-import com.gresaid.gameobserver.model.ReviewData
-import com.gresaid.gameobserver.utils.getJsonDataFromAsset
+import com.gresaid.gameobserver.presentation.model.ReviewData
+import com.gresaid.gameobserver.presentation.screens.gameInfoScreen.components.CategoryButton
+import com.gresaid.gameobserver.presentation.screens.gameInfoScreen.components.GameLogo
+import com.gresaid.gameobserver.presentation.screens.gameInfoScreen.components.PostSection
+import com.gresaid.gameobserver.presentation.screens.gameInfoScreen.components.ReviewDataGridItem
+import com.gresaid.gameobserver.presentation.screens.gameInfoScreen.components.RoundedButtonInstall
+import com.gresaid.gameobserver.presentation.utils.RatingStars
+import com.gresaid.gameobserver.presentation.utils.getJsonDataFromAsset
 
 @Composable
 fun GameInfoScreen() {
@@ -137,31 +131,6 @@ fun GameSection() {
 }
 
 @Composable
-fun GameLogo(
-    gameLogo: Int,
-    modifier: Modifier = Modifier,
-) {
-    Box(modifier = modifier.padding(horizontal = 20.dp)) {
-        val sizeGameIcon = 54.dp
-        Box(
-            modifier = Modifier
-                .size(sizeGameIcon + 17.dp * 2)
-                .background(Color.Black, shape = RoundedCornerShape(13.dp))
-                .border(2.dp, Color.Gray, RoundedCornerShape(13.dp))
-        ) {
-            Image(
-                painter = painterResource(id = gameLogo),
-                contentDescription = stringResource(R.string.game_logo),
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .size(sizeGameIcon)
-                    .align(Alignment.Center)
-            )
-        }
-    }
-}
-
-@Composable
 fun GameInfo(
     gameName: String,
     ratingsCount: Int,
@@ -200,18 +169,6 @@ fun GameInfo(
     }
 }
 
-@Composable
-fun RatingStars(starCount: Int) {
-    repeat(starCount) {
-        Icon(
-            imageVector = Icons.Default.Star,
-            contentDescription = stringResource(R.string.rating_star),
-            tint = Color.Yellow,
-            modifier = Modifier.size(12.dp)
-        )
-    }
-}
-
 
 @Composable
 fun CategorySection(
@@ -241,31 +198,6 @@ fun CategorySection(
     }
 }
 
-@Composable
-fun CategoryButton(
-    modifier: Modifier = Modifier,
-    text: String,
-
-    ) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .background(
-                color = Color(68, 169, 244, 24),
-                shape = RoundedCornerShape(100.dp)
-            )
-            .padding(1.dp),
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.body1,
-            color = MaterialTheme.colors.secondary
-        )
-    }
-
-}
-
 
 @Composable
 fun GameDescription(
@@ -292,54 +224,6 @@ fun GameMultimediaContent() {
             .fillMaxWidth()
             .padding(start = 20.dp)
     )
-}
-
-@Composable
-fun PostSection(
-    posts: List<Painter>,
-    modifier: Modifier = Modifier,
-) {
-    LazyHorizontalGrid(
-        modifier = modifier.size(width = 240.dp, height = 135.dp),
-        rows = GridCells.Fixed(1),
-        horizontalArrangement = Arrangement.spacedBy(15.dp),
-    ) {
-        items(posts.size) {
-            Box(
-                modifier = Modifier
-                    .size(width = 240.dp, height = 135.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Image(
-                    painter = posts[it],
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .clip(
-                            RoundedCornerShape(14.dp)
-                        ),
-                )
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .background(color = Color(255, 255, 255, 100), RoundedCornerShape(100.dp))
-                        .blur(
-                            radiusX = 10.dp,
-                            radiusY = 10.dp,
-                            edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
-                        ),
-                )
-
-
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = stringResource(R.string.play),
-                    tint = Color.White,
-                )
-
-            }
-        }
-    }
 }
 
 @Composable
@@ -421,86 +305,4 @@ fun UserReview() {
     }
 }
 
-@Composable
-fun ReviewDataGridItem(data: ReviewData) {
-    Column(
-        modifier = Modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start,
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-        ) {
-            Image(
-                painter = painterResource(
-                    id = when (data.id) {
-                        1L -> R.drawable.indus
-                        2L -> R.drawable.not_indus
-                        else -> R.drawable.blank_avatar
-                    }
-                ),
-                contentDescription = stringResource(R.string.userpic),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape),
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start,
-            ) {
-                Text(
-                    text = data.userName,
-                    style = MaterialTheme.typography.h3,
-                    color = MaterialTheme.colors.primary
-                )
-                Spacer(modifier = Modifier.height(7.dp))
-                Text(
-                    text = data.Date,
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.primary
-                ) // Change in feature
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = data.userComment,
-            style = MaterialTheme.typography.body2,
-            color = MaterialTheme.colors.onSecondary,
-            maxLines = 5,
-        )
-    }
 
-}
-
-
-@Composable
-fun RoundedButtonInstall(
-    modifier: Modifier = Modifier,
-    buttonName: String? = null,
-) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .background(
-                color = MaterialTheme.colors.secondaryVariant,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .fillMaxWidth(),
-    ) {
-        if (buttonName != null) {
-            Text(
-                modifier = Modifier.padding(vertical = 20.dp),
-                text = buttonName,
-                style = MaterialTheme.typography.h2,
-                color = MaterialTheme.colors.background,
-
-                )
-        }
-    }
-}

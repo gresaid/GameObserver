@@ -1,4 +1,4 @@
-package com.gresaid.gameobserver.utils
+package com.gresaid.gameobserver.presentation.utils
 
 import android.content.Context
 
