@@ -62,7 +62,7 @@ fun GameInfoScreen() {
             .fillMaxSize()
             .background(
                 Color(android.graphics.Color.parseColor("#050B18"))
-            )
+            ),
     ) {
         item {
             HeaderBackground(picture = R.drawable.dota_background)
@@ -77,7 +77,10 @@ fun GameInfoScreen() {
             ReviewAndRating()
         }
         item {
-            RoundedButtonInstall(modifier = Modifier.padding(vertical = 40.dp, horizontal = 24.dp), buttonName = "Install")
+            RoundedButtonInstall(
+                modifier = Modifier.padding(vertical = 40.dp, horizontal = 24.dp),
+                buttonName = "Install"
+            )
         }
     }
 }
@@ -86,13 +89,14 @@ val fontFamilyModernist = FontFamily(
     Font(R.font.modernist_regular, FontWeight.Normal),
     Font(R.font.modernist_bold, FontWeight.Bold)
 )
+
 @Composable
 fun HeaderBackground(
     picture: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Image(
             painter = painterResource(id = picture),
@@ -119,18 +123,19 @@ fun HeaderBackground(
 fun GameSection() {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         GameLogo(
-            gameLogo = R.drawable.dota_logo, modifier = Modifier
-                .offset(y = (-17).dp)
+            gameLogo = R.drawable.dota_logo,
+            modifier = Modifier
+                .offset(y = (-17).dp),
         )
         Spacer(modifier = Modifier.width(12.dp))
         GameInfo(gameName = "Dota 2", ratingsCount = 70, starCount = 5)
     }
     CategorySection(
         modifier = Modifier
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp),
     )
     Spacer(modifier = Modifier.height(30.dp))
     GameDescription(text = "Dota 2 is a multiplayer online battle arena (MOBA) game which has two teams of five players compete to collectively destroy a large structure defended by the opposing team known as the \"Ancient\", whilst defending their own.")
@@ -141,7 +146,7 @@ fun GameSection() {
 @Composable
 fun GameLogo(
     gameLogo: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.padding(horizontal = 20.dp)) {
         val sizeGameIcon = 54.dp
@@ -168,12 +173,12 @@ fun GameInfo(
     gameName: String,
     ratingsCount: Int,
     starCount: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
     ) {
 
         Text(
@@ -252,7 +257,7 @@ fun CategorySection(
 @Composable
 fun CategoryButton(
     modifier: Modifier = Modifier,
-    text: String? = null,
+    text: String,
 
     ) {
     Row(
@@ -263,17 +268,15 @@ fun CategoryButton(
                 color = Color(68, 169, 244, 24),
                 shape = RoundedCornerShape(100.dp)
             )
-            .padding(1.dp)
+            .padding(1.dp),
     ) {
-        if (text != null) {
-            Text(
-                text = text,
-                fontWeight = FontWeight.Normal,
-                fontFamily = fontFamilyModernist,
-                fontSize = 10.sp,
-                color = Color(android.graphics.Color.parseColor("#41A0E7"))
-            )
-        }
+        Text(
+            text = text,
+            fontWeight = FontWeight.Normal,
+            fontFamily = fontFamilyModernist,
+            fontSize = 10.sp,
+            color = Color(android.graphics.Color.parseColor("#41A0E7")),
+        )
     }
 
 }
@@ -313,18 +316,18 @@ fun GameMultimediaContent() {
 @Composable
 fun PostSection(
     posts: List<Painter>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyHorizontalGrid(
         modifier = modifier.size(width = 240.dp, height = 135.dp),
         rows = GridCells.Fixed(1),
-        horizontalArrangement = Arrangement.spacedBy(15.dp)
+        horizontalArrangement = Arrangement.spacedBy(15.dp),
     ) {
         items(posts.size) {
             Box(
                 modifier = Modifier
                     .size(width = 240.dp, height = 135.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Image(
                     painter = posts[it],
@@ -333,7 +336,7 @@ fun PostSection(
                     modifier = Modifier
                         .clip(
                             RoundedCornerShape(14.dp)
-                        )
+                        ),
                 )
                 Box(
                     modifier = Modifier
@@ -343,14 +346,14 @@ fun PostSection(
                             radiusX = 10.dp,
                             radiusY = 10.dp,
                             edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
-                        )
+                        ),
                 )
 
 
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
                     contentDescription = "Play",
-                    tint = Color.White
+                    tint = Color.White,
                 )
 
             }
@@ -368,7 +371,7 @@ fun ReviewAndRating(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Normal,
                 fontFamily = fontFamilyModernist,
                 fontSize = 16.sp,
-                color = Color(android.graphics.Color.parseColor("#EEF2FB"))
+                color = Color(android.graphics.Color.parseColor("#EEF2FB")),
             )
             Spacer(modifier = Modifier.height(12.dp))
             AverageRatingGame(ratingGame = 4.9f, ratingsCount = 70)
@@ -384,7 +387,7 @@ fun ReviewAndRating(modifier: Modifier = Modifier) {
 fun AverageRatingGame(
     modifier: Modifier = Modifier,
     ratingGame: Float? = null,
-    ratingsCount: Int? = null
+    ratingsCount: Int? = null,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -434,9 +437,9 @@ fun UserReview() {
         columns = GridCells.Fixed(1),
         modifier = Modifier
             .height(350.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp),
 
-    ) {
+        ) {
         items(reviewData) { data ->
             ReviewDataGridItem(data)
         }
@@ -448,12 +451,12 @@ fun ReviewDataGridItem(data: ReviewData) {
     Column(
         modifier = Modifier,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.Start,
         ) {
             Image(
                 painter = painterResource(
@@ -462,17 +465,18 @@ fun ReviewDataGridItem(data: ReviewData) {
                         2L -> R.drawable.not_indus
                         else -> R.drawable.blank_avatar
                     }
-                ), contentDescription = "UserPic",
+                ),
+                contentDescription = "UserPic",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(36.dp)
-                    .clip(CircleShape)
+                    .clip(CircleShape),
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(
                 modifier = Modifier,
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.Start,
             ) {
                 Text(
                     text = data.userName, color = Color.White,
@@ -480,14 +484,16 @@ fun ReviewDataGridItem(data: ReviewData) {
                     fontFamily = fontFamilyModernist
                 )
                 Spacer(modifier = Modifier.height(7.dp))
-                Text(text = data.Date, color = Color.White, fontSize = 12.sp,
-                    fontFamily = fontFamilyModernist) // Change in feature
+                Text(
+                    text = data.Date, color = Color.White, fontSize = 12.sp,
+                    fontFamily = fontFamilyModernist
+                ) // Change in feature
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = data.userComment, fontSize = 12.sp, color = Color.White,
-            lineHeight = 20.sp, maxLines = 5, fontFamily = fontFamilyModernist
+            lineHeight = 20.sp, maxLines = 5, fontFamily = fontFamilyModernist,
         )
     }
 
@@ -499,8 +505,10 @@ fun getJsonDataFromAsset(context: Context, data: String): String {
 }
 
 @Composable
-fun RoundedButtonInstall(modifier: Modifier = Modifier,
-                  buttonName: String? = null){
+fun RoundedButtonInstall(
+    modifier: Modifier = Modifier,
+    buttonName: String? = null,
+) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -509,7 +517,7 @@ fun RoundedButtonInstall(modifier: Modifier = Modifier,
                 color = Color(android.graphics.Color.parseColor("#F4D144")),
                 shape = RoundedCornerShape(12.dp)
             )
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         if (buttonName != null) {
             Text(
@@ -518,7 +526,7 @@ fun RoundedButtonInstall(modifier: Modifier = Modifier,
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
                 fontFamily = fontFamilyModernist,
-                color = Color(android.graphics.Color.parseColor("#050B18"))
+                color = Color(android.graphics.Color.parseColor("#050B18")),
             )
         }
     }
