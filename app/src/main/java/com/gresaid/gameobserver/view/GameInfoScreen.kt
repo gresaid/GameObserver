@@ -1,6 +1,5 @@
 package com.gresaid.gameobserver.view
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,17 +43,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.gresaid.gameobserver.R
 import com.gresaid.gameobserver.model.ReviewData
+import com.gresaid.gameobserver.utils.getJsonDataFromAsset
 
 @Composable
 fun GameInfoScreen() {
@@ -61,7 +58,7 @@ fun GameInfoScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Color(android.graphics.Color.parseColor("#050B18"))
+                Color(0xFF050B18)
             ),
     ) {
         item {
@@ -79,16 +76,12 @@ fun GameInfoScreen() {
         item {
             RoundedButtonInstall(
                 modifier = Modifier.padding(vertical = 40.dp, horizontal = 24.dp),
-                buttonName = "Install"
+                buttonName = stringResource(R.string.install)
             )
         }
     }
 }
 
-val fontFamilyModernist = FontFamily(
-    Font(R.font.modernist_regular, FontWeight.Normal),
-    Font(R.font.modernist_bold, FontWeight.Bold)
-)
 
 @Composable
 fun HeaderBackground(
@@ -158,7 +151,7 @@ fun GameLogo(
         ) {
             Image(
                 painter = painterResource(id = gameLogo),
-                contentDescription = "Game Logo",
+                contentDescription = stringResource(R.string.game_logo),
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .size(sizeGameIcon)
@@ -184,11 +177,8 @@ fun GameInfo(
         Text(
             text = gameName,
             overflow = TextOverflow.Ellipsis,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            fontFamily = fontFamilyModernist,
-            letterSpacing = 0.5.sp,
-            color = Color.White
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary,
         )
         Spacer(modifier = Modifier.height(7.dp))
         Row(
@@ -199,13 +189,10 @@ fun GameInfo(
             RatingStars(starCount)
             Spacer(modifier = Modifier.width(10.dp))
             Text(
-                text = ratingsCount.toString() + "M",
+                text = "${ratingsCount}M",
                 overflow = TextOverflow.Ellipsis,
-                fontWeight = FontWeight.Normal,
-                fontFamily = fontFamilyModernist,
-                fontSize = 12.sp,
-                letterSpacing = 0.5.sp,
-                color = Color.White
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
 
@@ -218,7 +205,7 @@ fun RatingStars(starCount: Int) {
     repeat(starCount) {
         Icon(
             imageVector = Icons.Default.Star,
-            contentDescription = "Rating Star",
+            contentDescription = stringResource(R.string.rating_star),
             tint = Color.Yellow,
             modifier = Modifier.size(12.dp)
         )
@@ -272,10 +259,8 @@ fun CategoryButton(
     ) {
         Text(
             text = text,
-            fontWeight = FontWeight.Normal,
-            fontFamily = fontFamilyModernist,
-            fontSize = 10.sp,
-            color = Color(android.graphics.Color.parseColor("#41A0E7")),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.secondary
         )
     }
 
@@ -290,13 +275,9 @@ fun GameDescription(
         if (text != null) {
             Text(
                 text = text,
-                lineHeight = 19.sp,
-                fontSize = 12.sp,
-                fontStyle = FontStyle.Normal,
-                fontFamily = fontFamilyModernist,
-                color = Color(238, 242, 251, 70),
-
-                )
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondary,
+            )
         }
     }
 }
@@ -352,7 +333,7 @@ fun PostSection(
 
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play",
+                    contentDescription = stringResource(R.string.play),
                     tint = Color.White,
                 )
 
@@ -367,11 +348,9 @@ fun ReviewAndRating(modifier: Modifier = Modifier) {
     Box(modifier.padding(horizontal = 20.dp)) {
         Column {
             Text(
-                text = "Review & Ratings",
-                fontWeight = FontWeight.Normal,
-                fontFamily = fontFamilyModernist,
-                fontSize = 16.sp,
-                color = Color(android.graphics.Color.parseColor("#EEF2FB")),
+                text = stringResource(R.string.review_ratings),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(modifier = Modifier.height(12.dp))
             AverageRatingGame(ratingGame = 4.9f, ratingsCount = 70)
@@ -396,10 +375,8 @@ fun AverageRatingGame(
     ) {
         Text(
             text = ratingGame.toString(),
-            fontWeight = FontWeight.Bold,
-            fontFamily = fontFamilyModernist,
-            fontSize = 48.sp,
-            color = Color(android.graphics.Color.parseColor("#EEF2FB"))
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(
@@ -417,10 +394,8 @@ fun AverageRatingGame(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = ratingsCount.toString() + "M",
-                fontWeight = FontWeight.Bold,
-                fontFamily = fontFamilyModernist,
-                fontSize = 12.sp,
-                color = Color(android.graphics.Color.parseColor("#EEF2FB"))
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondary,
             )
         }
     }
@@ -466,7 +441,7 @@ fun ReviewDataGridItem(data: ReviewData) {
                         else -> R.drawable.blank_avatar
                     }
                 ),
-                contentDescription = "UserPic",
+                contentDescription = stringResource(R.string.userpic),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(36.dp)
@@ -479,30 +454,29 @@ fun ReviewDataGridItem(data: ReviewData) {
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
-                    text = data.userName, color = Color.White,
-                    fontSize = 16.sp,
-                    fontFamily = fontFamilyModernist
+                    text = data.userName,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(7.dp))
                 Text(
-                    text = data.Date, color = Color.White, fontSize = 12.sp,
-                    fontFamily = fontFamilyModernist
+                    text = data.Date,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary
                 ) // Change in feature
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = data.userComment, fontSize = 12.sp, color = Color.White,
-            lineHeight = 20.sp, maxLines = 5, fontFamily = fontFamilyModernist,
+            text = data.userComment,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSecondary,
+            maxLines = 5,
         )
     }
 
 }
 
-fun getJsonDataFromAsset(context: Context, data: String): String {
-    return context.assets.open(data).bufferedReader().use { it.readText() }
-
-}
 
 @Composable
 fun RoundedButtonInstall(
@@ -514,7 +488,7 @@ fun RoundedButtonInstall(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .background(
-                color = Color(android.graphics.Color.parseColor("#F4D144")),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 shape = RoundedCornerShape(12.dp)
             )
             .fillMaxWidth(),
@@ -523,11 +497,10 @@ fun RoundedButtonInstall(
             Text(
                 modifier = Modifier.padding(vertical = 20.dp),
                 text = buttonName,
-                fontWeight = FontWeight.Normal,
-                fontSize = 20.sp,
-                fontFamily = fontFamilyModernist,
-                color = Color(android.graphics.Color.parseColor("#050B18")),
-            )
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+
+                )
         }
     }
 }
