@@ -4,17 +4,17 @@ plugins {
 }
 
 android {
-    namespace = "com.gresaid.gameobserver"
-    compileSdk = 33
+    namespace = Config.namespace
+    compileSdk = Config.compileSdk
 
     defaultConfig {
-        applicationId = "com.gresaid.gameobserver"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Config.applicationId
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
+        versionCode = Config.versionCode
+        versionName = Config.versionName
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Config.testRunner
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -50,20 +50,21 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(Dependencies.Detekt.detekt)
+    implementation(Dependencies.Json.gson)
+    implementation(Dependencies.Android.coreKtx)
+    implementation(Dependencies.Lifecycle.lifecycle)
+    implementation(Dependencies.Lifecycle.activityCompose)
+    implementation(platform(Dependencies.Compose.composeBOM))
+    implementation(Dependencies.Compose.ui)
+    implementation(Dependencies.Compose.uiGraphics)
+    implementation(Dependencies.Compose.material)
+    implementation(Dependencies.Navigation.nabigationRuntimeKtx)
+    testImplementation(Dependencies.Test.jUnit)
+    androidTestImplementation(Dependencies.Test.androidJUnit)
+    androidTestImplementation(Dependencies.Test.espresso)
+    androidTestImplementation(platform(Dependencies.Compose.composeBOM))
+    androidTestImplementation(Dependencies.Compose.composeJUnit)
+    debugImplementation(Dependencies.Compose.composeJUnit)
+    debugImplementation(Dependencies.Compose.composeManifest)
 }

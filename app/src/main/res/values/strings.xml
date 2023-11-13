@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GameObserver</string>
+    <string name="rating_star">Rating Star</string>
+    <string name="game_logo">Game Logo</string>
+    <string name="install">Install</string>
+    <string name="play">Play</string>
+    <string name="review_ratings"><![CDATA[Review & Ratings]]></string>
+    <string name="userpic">UserPic</string>
 </resources>
